@@ -8,7 +8,6 @@ import {BookDetailsPage} from "../book-details/book-details";
   templateUrl: 'home.html'
 })
 export class HomePage {
-  numbers = [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0];
   constructor(public navCtrl: NavController) {
 
   }

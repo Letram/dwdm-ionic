@@ -2,4 +2,15 @@ page-login {
   .aligned-center{
     text-align: center;
   }
+  .register{
+    display: none;
+  }
+  .registerP{
+    display: inline;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  .registerP:hover{
+    color: #488aff;
+  }
 }

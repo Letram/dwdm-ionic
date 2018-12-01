@@ -14,22 +14,44 @@
 
 
 <ion-content padding>
-  <ion-list>
-
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input [(ngModel)]="user.username" type="text" value=""></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input [(ngModel)]="user.password"  type="password" value=""></ion-input>
-    </ion-item>
-
-  </ion-list>
-  <ion-row>
-    <ion-col class="aligned-center">
-      <button ion-button round (click)="login()">Login</button>
-    </ion-col>
-  </ion-row>
+  <div class="login">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col class="aligned-center">
+          <button ion-button round type="submit" [disabled]="!loginForm.valid">Login</button>
+        </ion-col>
+      </ion-row>
+    </form>
+    Not registered yet? <p class="registerP" (click)="toggleDisplay()">Sign up!</p>
+  </div>
+  <div class="register">
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Repeat password</ion-label>
+          <ion-input type="password" formControlName="passwordRep"></ion-input>
+        </ion-item>
+      <ion-row>
+        <ion-col class="aligned-center">
+          <button ion-button round type="submit" [disabled]="!signupForm.valid">Sign up</button>
+        </ion-col>
+      </ion-row>
+    </form>
+    <p class="registerP" (click)="toggleDisplay()">Login here</p>
+  </div>
 </ion-content>

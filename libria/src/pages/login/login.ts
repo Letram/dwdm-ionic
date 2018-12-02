@@ -20,7 +20,6 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private authProvider: AuthenticationProvider) {
     this.loginForm = this.generateLoginForm();
     this.signupForm = this.generateSignupForm();
-
   }
 
   ionViewDidLoad() {
@@ -31,11 +30,11 @@ export class LoginPage {
     console.log(this.loginForm);
     this.authProvider.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .then((data) => {
-        console.log(data.user);
+        this.authProvider.setUserData({email: data.user.email, id: data.user.uid});
         this.navCtrl.setRoot(HomePage);
         this.navCtrl.popToRoot();
       },() =>{
-        console.log("Usuario no encontrado");
+        alert("Incorrect password or email.")
       });
   }
 
@@ -62,11 +61,11 @@ export class LoginPage {
   signup() {
     this.authProvider.signup(this.signupForm.controls.email.value, this.signupForm.controls.password.value)
       .then((data) => {
-        console.log(data.user);
+        this.authProvider.setUserData({email: data.user.email, id: data.user.uid});
         this.navCtrl.setRoot(HomePage);
         this.navCtrl.popToRoot();
       }, () =>{
-        console.log("Usuario no encontrado");
+        alert("Existing email.");
       });
   }
 }

@@ -4,8 +4,11 @@ import {AngularFireAuth} from "@angular/fire/auth";
 
 @Injectable()
 export class AuthenticationProvider {
-
-  constructor(public http: HttpClient, public afAuth: AngularFireAuth) {
+  userData = {
+    email: "",
+    id: ""
+  };
+  constructor(public http: HttpClient, private afAuth: AngularFireAuth) {
     console.log('Hello AuthenticationProvider Provider');
   }
 
@@ -14,5 +17,11 @@ export class AuthenticationProvider {
   }
   signup(email,password){
     return this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email,password);
+  }
+  getUserData(){
+    return this.userData;
+  }
+  setUserData(userData){
+    this.userData = userData;
   }
 }

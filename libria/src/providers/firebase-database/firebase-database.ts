@@ -8,10 +8,10 @@ export class FirebaseDatabaseProvider {
   constructor(public http: HttpClient, private db: AngularFirestore) {}
 
   getBooks(){
-    return this.db.collection("Books").snapshotChanges();
+    return this.db.collection("Books", bookref => bookref.orderBy("title")).snapshotChanges();
   }
   getCategories(){
-    return this.db.collection("Categories").snapshotChanges();
+    return this.db.collection("Categories", categoryref => categoryref.orderBy('name')).snapshotChanges();
   }
 
 }

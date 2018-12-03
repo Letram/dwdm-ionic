@@ -4,8 +4,8 @@ export class Book{
   categories: string[] = [];
   isFavourite: boolean = false;
   isRead: boolean = false;
-  likes: number = 0;
-  pages: number = 0;
+  numOfLikes: number = 0;
+  numOfPages: number = 0;
 
   constructor(values: Object = {}){
     (<any>Object).assign(this, values);

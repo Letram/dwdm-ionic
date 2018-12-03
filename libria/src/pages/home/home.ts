@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {LoadingController, NavController} from 'ionic-angular';
 import {ProfilePage} from "../profile/profile";
 import {BookDetailsPage} from "../book-details/book-details";
 import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
+import {Category} from "../../models/Category";
 
 @Component({
   selector: 'page-home',
@@ -11,12 +12,27 @@ import {FirebaseDatabaseProvider} from "../../providers/firebase-database/fireba
 })
 export class HomePage {
   books: Book[] = [];
-  constructor(public navCtrl: NavController, public db: FirebaseDatabaseProvider) {
+  categories: Category[] = [];
+  constructor(public navCtrl: NavController, public db: FirebaseDatabaseProvider, private loader: LoadingController) {
 
   }
 
   ionViewDidLoad(){
-    this.db.getBooks().subscribe(result => console.log(result));
+    let loader = this.loader.create({
+      content: 'Retrieving data...',
+      spinner: 'dots'
+    });
+    loader.present().then(()=>{
+      this.db.getBooks().subscribe(result => {
+        result.forEach(unparsedBook =>{
+          let parsedBook = new Book(unparsedBook.payload.doc.data());
+          parsedBook.id = unparsedBook.payload.doc.id;
+          this.books.push(parsedBook);
+        });
+        console.log(this.books);
+        loader.dismiss();
+      });
+    });
   }
 
   openProfile() {

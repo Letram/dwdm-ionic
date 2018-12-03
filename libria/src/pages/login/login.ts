@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {HomePage} from "../home/home";
 import * as $ from 'jquery';
 import {Validators, FormBuilder, FormGroup} from "@angular/forms";
 import {AuthenticationProvider} from "../../providers/authentication/authentication";
+import {TabsPage} from "../tabs/tabs";
 
 @IonicPage()
 @Component({
@@ -31,7 +31,7 @@ export class LoginPage {
     this.authProvider.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .then((data) => {
         this.authProvider.setUserData({email: data.user.email, id: data.user.uid});
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(TabsPage);
         this.navCtrl.popToRoot();
       },() =>{
         alert("Incorrect password or email.")
@@ -62,7 +62,7 @@ export class LoginPage {
     this.authProvider.signup(this.signupForm.controls.email.value, this.signupForm.controls.password.value)
       .then((data) => {
         this.authProvider.setUserData({email: data.user.email, id: data.user.uid});
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(TabsPage);
         this.navCtrl.popToRoot();
       }, () =>{
         alert("Existing email.");

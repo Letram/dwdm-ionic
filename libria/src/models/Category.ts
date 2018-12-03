@@ -1,5 +1,6 @@
 export class Category{
-  title: string = "";
+  id: string = "";
+  name: string = "";
   bookNum: number = 0;
 
   constructor(values: Object = {}){

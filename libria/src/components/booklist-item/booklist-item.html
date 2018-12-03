@@ -1,0 +1,22 @@
+<ion-card>
+  <ion-card-header>
+    {{book.title}}
+  </ion-card-header>
+  <ion-card-content>
+    Categories: {{book.categories}}
+  </ion-card-content>
+  <ion-row>
+    <ion-col>
+      <button ion-button icon-start clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>{{book.numOfLikes}} Likes</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button icon-start clear small>
+        <ion-icon name="book"></ion-icon>
+        <div>{{book.numOfPages}} Pages</div>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-card>

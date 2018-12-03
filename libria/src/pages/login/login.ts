@@ -4,6 +4,8 @@ import * as $ from 'jquery';
 import {Validators, FormBuilder, FormGroup} from "@angular/forms";
 import {AuthenticationProvider} from "../../providers/authentication/authentication";
 import {TabsPage} from "../tabs/tabs";
+import {User} from "../../models/User";
+import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
 
 @IonicPage()
 @Component({
@@ -17,7 +19,10 @@ export class LoginPage {
   };
   loginForm: FormGroup;
   signupForm: FormGroup;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private authProvider: AuthenticationProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private formBuilder: FormBuilder,
+              private authProvider: AuthenticationProvider,
+              private db: FirebaseDatabaseProvider) {
     this.loginForm = this.generateLoginForm();
     this.signupForm = this.generateSignupForm();
   }
@@ -30,9 +35,17 @@ export class LoginPage {
     console.log(this.loginForm);
     this.authProvider.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .then((data) => {
-        this.authProvider.setUserData({email: data.user.email, id: data.user.uid});
-        this.navCtrl.setRoot(TabsPage);
-        this.navCtrl.popToRoot();
+        let loggedUser = new User();
+        loggedUser.email = data.user.email;
+        loggedUser.uid = data.user.uid;
+        this.db.getUserDataFromDB(loggedUser.uid).subscribe((result) => {
+          loggedUser.favouriteBookIds = result.data().favouriteBookIds;
+          loggedUser.likedBookIds = result.data().likedBookIds;
+          loggedUser.username = result.data().username;
+          this.authProvider.setUserData(loggedUser);
+          this.navCtrl.setRoot(TabsPage);
+          this.navCtrl.popToRoot();
+        });
       },() =>{
         alert("Incorrect password or email.")
       });
@@ -61,9 +74,18 @@ export class LoginPage {
   signup() {
     this.authProvider.signup(this.signupForm.controls.email.value, this.signupForm.controls.password.value)
       .then((data) => {
-        this.authProvider.setUserData({email: data.user.email, id: data.user.uid});
-        this.navCtrl.setRoot(TabsPage);
-        this.navCtrl.popToRoot();
+        let loggedUser = new User({
+          email: this.signupForm.controls.email.value,
+          username: this.signupForm.controls.username.value,
+          uid: data.user.uid,
+          likedBookIds: [],
+          favouriteBookIds:[]
+        });
+        this.db.setUserData(loggedUser.uid, loggedUser).then(_ => {
+          this.authProvider.setUserData(loggedUser);
+          this.navCtrl.setRoot(TabsPage);
+          this.navCtrl.popToRoot();
+        });
       }, () =>{
         alert("Existing email.");
       });

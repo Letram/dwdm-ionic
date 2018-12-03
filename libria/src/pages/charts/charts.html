@@ -1,7 +1,13 @@
+<ion-header>
+  <ion-toolbar no-border-top>
+    <ion-searchbar placeholder="Filter by name..." [(ngModel)] = "searchName"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let category of categories">
-      {{category.name}} -> {{category.bookNum}}
+    <ion-item *ngFor="let category of categories | namePipe: searchName">
+      {{category.name}} has {{category.bookNum}} books out of {{bookCount}}
+      <progress-bar [progress] = "(category.bookNum/bookCount) * 100"></progress-bar>
     </ion-item>
   </ion-list>
 </ion-content>

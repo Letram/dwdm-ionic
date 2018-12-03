@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
+import {User} from "../../models/User";
 
 @Injectable()
 export class AuthenticationProvider {
-  userData = {
-    email: "",
-    id: ""
-  };
+  loggedUser: User = new User();
   constructor(public http: HttpClient, private afAuth: AngularFireAuth) {
     console.log('Hello AuthenticationProvider Provider');
   }
@@ -19,9 +17,10 @@ export class AuthenticationProvider {
     return this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email,password);
   }
   getUserData(){
-    return this.userData;
+    return this.loggedUser;
   }
   setUserData(userData){
-    this.userData = userData;
+    this.loggedUser = userData;
+    console.log(userData);
   }
 }

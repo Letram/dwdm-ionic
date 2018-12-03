@@ -1,25 +1,23 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Book} from "../../models/Book";
+import {Category} from "../../models/Category";
 
 /**
- * Generated class for the TitleFilterPipe pipe.
+ * Generated class for the NamePipe pipe.
  *
  * See https://angular.io/api/core/Pipe for more info on Angular Pipes.
  */
 @Pipe({
-  name: 'titleFilter',
+  name: 'namePipe',
 })
-export class TitleFilterPipe implements PipeTransform {
-
-  transform(items: Book[], searchText: string): any[] {
+export class NamePipe implements PipeTransform {
+  transform(items: Category[], searchText: string): any[] {
     if(!items) return [];
     if(!searchText) return items;
 
     searchText = searchText.toLowerCase();
 
     return items.filter( it => {
-      return it.title.toLowerCase().includes(searchText);
+      return it.name.toLowerCase().includes(searchText);
     });
   }
-
 }

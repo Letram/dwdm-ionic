@@ -2,14 +2,6 @@ import { Component } from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {Category} from "../../models/Category";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
-import {Book} from "../../models/Book";
-
-/**
- * Generated class for the ChartsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,6 +10,8 @@ import {Book} from "../../models/Book";
 })
 export class ChartsPage {
   categories: Category[] = [];
+  bookCount: number = 1;
+  searchName: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: FirebaseDatabaseProvider, private loader: LoadingController) {
   }
 
@@ -35,8 +29,10 @@ export class ChartsPage {
           parsedCategory.id = unparsedCategory.payload.doc.id;
           this.categories.push(parsedCategory);
         });
+      });
+      this.db.getBooks().subscribe(result => {
+        this.bookCount = result.length;
         loader.dismiss();
-        console.log(this.categories);
       });
     });
   }

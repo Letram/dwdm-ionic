@@ -1,7 +1,7 @@
 export class User{
   uid: string = "";
   username: string = "";
-  email: string[] = [];
+  email: string = "";
   favouriteBookIds: number[] = [];
   likedBookIds: number[] = [];
 

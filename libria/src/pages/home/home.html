@@ -1,6 +1,8 @@
+<ion-header>
+  <ion-toolbar no-border-top>
+    <ion-searchbar placeholder="Filter Items" [(ngModel)] = "searchTitle"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
 <ion-content padding>
-  <button ion-button icon-only class="top-right-corner" (click)="openProfile()">
-    <ion-icon name="person"></ion-icon>
-  </button>
-  <booklist [books]="this.books"></booklist>
+  <booklist [books]="this.books | titleFilter: searchTitle"></booklist>
 </ion-content>

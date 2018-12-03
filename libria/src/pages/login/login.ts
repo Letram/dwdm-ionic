@@ -54,7 +54,7 @@ export class LoginPage {
     return this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      passwordRep: ['', [Validators.required, Validators.minLength(6)]]
+      username: ['', [Validators.required]]
     });
   }
 

@@ -14,7 +14,9 @@ import {BookDetailsPage} from "../pages/book-details/book-details";
 import {BooklistPage} from "../pages/booklist/booklist";
 import {TabsPage} from "../pages/tabs/tabs";
 import {ChartsPage} from "../pages/charts/charts";
+
 //modules
+import {ProgressBarModule} from "angular-progress-bar";
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
@@ -24,6 +26,7 @@ import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebas
 
 //custom components
 import {ComponentsModule} from "../components/components.module";
+import {PipesModule} from "../pipes/pipes.module";
 
 @NgModule({
   declarations: [
@@ -43,7 +46,9 @@ import {ComponentsModule} from "../components/components.module";
     AngularFireModule.initializeApp(environment.config),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule,
+    ProgressBarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

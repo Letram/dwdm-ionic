@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {ChartsPage} from "../charts/charts";
+import {ProfilePage} from "../profile/profile";
 
 /**
  * Generated class for the TabsPage page.
@@ -24,5 +25,7 @@ export class TabsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TabsPage');
   }
-
+  openProfile() {
+    this.navCtrl.push(ProfilePage);
+  }
 }

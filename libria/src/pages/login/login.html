@@ -38,14 +38,14 @@
         <ion-label floating>Email</ion-label>
         <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
-        <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Repeat password</ion-label>
-          <ion-input type="password" formControlName="passwordRep"></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
       <ion-row>
         <ion-col class="aligned-center">
           <button ion-button round type="submit" [disabled]="!signupForm.valid">Sign up</button>

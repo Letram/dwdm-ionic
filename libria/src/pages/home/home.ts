@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import {LoadingController, NavController} from 'ionic-angular';
-import {ProfilePage} from "../profile/profile";
 import {BookDetailsPage} from "../book-details/book-details";
 import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
-import {Category} from "../../models/Category";
 
 @Component({
   selector: 'page-home',
@@ -12,7 +10,8 @@ import {Category} from "../../models/Category";
 })
 export class HomePage {
   books: Book[] = [];
-  categories: Category[] = [];
+  searchTitle: string = "";
+
   constructor(public navCtrl: NavController, public db: FirebaseDatabaseProvider, private loader: LoadingController) {
 
   }
@@ -33,10 +32,6 @@ export class HomePage {
         loader.dismiss();
       });
     });
-  }
-
-  openProfile() {
-    this.navCtrl.push(ProfilePage);
   }
 
   openDetails() {

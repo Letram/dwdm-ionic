@@ -56,4 +56,19 @@ export class HomePage {
       toast.present()
     });
   }
+
+  removeBookIdFromFavourites(id: string) {
+    let currentUser = this.afAuth.getUserData();
+    let index = currentUser.favouriteBookIds.indexOf(id);
+    currentUser.favouriteBookIds.splice(index,1);
+    this.db.setUserData(currentUser.uid, currentUser).then(_ => {
+      let toast = this.toaster.create({
+        message: 'Book removed from favourites',
+        position: 'bottom',
+        duration: 1000,
+        cssClass: 'unfavToast'
+      });
+      toast.present()
+    });
+  }
 }

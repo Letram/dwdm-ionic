@@ -13,8 +13,10 @@ import {Book} from "../../models/Book";
 })
 export class BooklistComponent {
   @Output() onBookAddedToFavourites: EventEmitter<string> = new EventEmitter();
+  @Output() onBookRemovedFromFavourites: EventEmitter<string> = new EventEmitter();
   text: string = "Hello world";
   @Input() books: Book[];
+  @Input() favs: string[];
   constructor() {
     console.log('Hello BooklistComponent Component');
   }
@@ -25,5 +27,9 @@ export class BooklistComponent {
 
   onBookToFavourites(id: string) {
     this.onBookAddedToFavourites.emit(id);
+  }
+
+  onRemoveFromFavourites(id: string) {
+    this.onBookRemovedFromFavourites.emit(id);
   }
 }

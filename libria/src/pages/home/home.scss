@@ -1,7 +1,14 @@
+$favToastColor:  #f53d3d;
+$unfavToastColor:  #222;
 page-home {
   .favToast{
     .toast-message {
       border-radius: 0.65rem !important;
-      background: color($colors, danger) }
+      background-color: $favToastColor}
+  }
+  .unfavToast{
+    .toast-message {
+      border-radius: 0.65rem !important;
+      background-color: $unfavToastColor}
   }
 }

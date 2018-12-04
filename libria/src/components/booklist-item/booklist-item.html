@@ -25,9 +25,13 @@
 
   </ion-item>
   <ion-item-options>
-    <button ion-button color="danger" (click)="addToFavourites(book.id, card)">
+    <button ion-button color="danger" (click)="addToFavourites(book.id)" *ngIf="favs.indexOf(book.id) === -1">
       <ion-icon name="heart"></ion-icon>
       Add to favourites
+    </button>
+    <button ion-button color="dark" (click)="removeFromFavourites(book.id)" *ngIf="favs.indexOf(book.id) !== -1">
+      <ion-icon name="close"></ion-icon>
+      Remove from favourites
     </button>
   </ion-item-options>
 </ion-item-sliding>

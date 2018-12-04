@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {LoadingController, NavController} from 'ionic-angular';
+import {LoadingController, NavController, ToastController} from 'ionic-angular';
 import {BookDetailsPage} from "../book-details/book-details";
 import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
+import {AuthenticationProvider} from "../../providers/authentication/authentication";
 
 @Component({
   selector: 'page-home',
@@ -12,7 +13,11 @@ export class HomePage {
   books: Book[] = [];
   searchTitle: string = "";
 
-  constructor(public navCtrl: NavController, public db: FirebaseDatabaseProvider, private loader: LoadingController) {
+  constructor(public navCtrl: NavController,
+              public db: FirebaseDatabaseProvider,
+              private loader: LoadingController,
+              private afAuth: AuthenticationProvider,
+              private toaster: ToastController) {
 
   }
 
@@ -36,5 +41,19 @@ export class HomePage {
 
   openDetails() {
     this.navCtrl.push(BookDetailsPage);
+  }
+
+  addBookIdToFavourites(id: string) {
+    let currentUser = this.afAuth.getUserData();
+    currentUser.favouriteBookIds.push(id);
+    this.db.setUserData(currentUser.uid, currentUser).then(_ => {
+      let toast = this.toaster.create({
+        message: 'Book added to favourites',
+        position: 'bottom',
+        duration: 1000,
+        cssClass: 'favToast'
+      });
+      toast.present()
+    });
   }
 }

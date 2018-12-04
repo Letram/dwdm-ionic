@@ -1,22 +1,33 @@
-<ion-card>
-  <ion-card-header>
-    {{book.title}}
-  </ion-card-header>
-  <ion-card-content>
-    Categories: {{book.categories}}
-  </ion-card-content>
-  <ion-row>
-    <ion-col>
-      <button ion-button icon-start clear small color="dark">
-        <ion-icon name="thumbs-up"></ion-icon>
-        <div>{{book.numOfLikes}} Likes</div>
-      </button>
-    </ion-col>
-    <ion-col>
-      <button ion-button icon-start clear small disabled color="dark">
-        <ion-icon name="book"></ion-icon>
-        <div>{{book.numOfPages}} Pages</div>
-      </button>
-    </ion-col>
-  </ion-row>
-</ion-card>
+<ion-item-sliding>
+  <ion-item>
+    <ion-card>
+      <ion-card-header>
+        {{book.title}}
+      </ion-card-header>
+      <ion-card-content>
+        Categories: {{book.categories}}
+      </ion-card-content>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small color="dark">
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>{{book.numOfLikes}} Likes</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-start clear small disabled color="dark">
+            <ion-icon name="book"></ion-icon>
+            <div>{{book.numOfPages}} Pages</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
+  </ion-item>
+  <ion-item-options>
+    <button ion-button color="danger" (click)="addToFavourites(book.id, card)">
+      <ion-icon name="heart"></ion-icon>
+      Add to favourites
+    </button>
+  </ion-item-options>
+</ion-item-sliding>

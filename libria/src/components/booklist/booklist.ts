@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Book} from "../../models/Book";
 
 /**
@@ -12,7 +12,7 @@ import {Book} from "../../models/Book";
   templateUrl: 'booklist.html'
 })
 export class BooklistComponent {
-
+  @Output() onBookAddedToFavourites: EventEmitter<string> = new EventEmitter();
   text: string = "Hello world";
   @Input() books: Book[];
   constructor() {
@@ -21,5 +21,9 @@ export class BooklistComponent {
 
   ionViewDidLoad(){
 
+  }
+
+  onBookToFavourites(id: string) {
+    this.onBookAddedToFavourites.emit(id);
   }
 }

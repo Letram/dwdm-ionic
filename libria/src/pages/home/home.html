@@ -4,5 +4,5 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <booklist [books]="this.books | titleFilter: searchTitle"></booklist>
+  <booklist [books]="this.books | titleFilter: searchTitle" (onBookAddedToFavourites)="addBookIdToFavourites($event)"></booklist>
 </ion-content>

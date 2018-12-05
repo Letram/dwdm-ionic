@@ -14,18 +14,15 @@ import {AuthenticationProvider} from "../../providers/authentication/authenticat
 })
 export class BooklistItemComponent {
 
-  text: string;
   @Input() book: Book;
   @Input() favs: string[];
+  @Input() liked: string[];
 
   @Output() onAddToFavourites: EventEmitter<string> = new EventEmitter();
   @Output() onRemoveFromFavourites: EventEmitter<string> = new EventEmitter();
   @Output() onLikeBook: EventEmitter<{}> = new EventEmitter();
-
-  constructor() {
-    console.log('Hello BooklistItemComponent Component');
-    this.text = 'Hello World';
-  }
+  @Output() onUnlikeBook: EventEmitter<{}> = new EventEmitter();
+  constructor() {}
 
   ionViewDidLoad(){
   }
@@ -40,5 +37,8 @@ export class BooklistItemComponent {
 
   like(id: string, likes: number) {
     this.onLikeBook.emit({id:id,numOfLikes:likes});
+  }
+  unlike(id: string, likes: number) {
+    this.onUnlikeBook.emit({id:id,numOfLikes:likes});
   }
 }

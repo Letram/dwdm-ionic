@@ -1,7 +1,8 @@
 <!-- Generated template for the BooklistComponent component -->
 <ion-list>
-  <booklist-item *ngFor="let book of books" [book] = book [favs] = "favs"
+  <booklist-item *ngFor="let book of books" [book] = book [favs] = "favs" [liked] = "liked"
                  (onAddToFavourites)="onBookToFavourites($event)"
                  (onRemoveFromFavourites)="onRemoveFromFavourites($event)"
-                 (onLikeBook)="like($event)"></booklist-item>
+                 (onLikeBook)="like($event)"
+                 (onUnlikeBook)="unlike($event)"></booklist-item>
 </ion-list>

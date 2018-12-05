@@ -16,13 +16,13 @@ export class BooklistComponent {
   @Output() onBookAddedToFavourites: EventEmitter<string> = new EventEmitter();
   @Output() onBookRemovedFromFavourites: EventEmitter<string> = new EventEmitter();
   @Output() onLikeBook: EventEmitter<{}> = new EventEmitter();
+  @Output() onUnlikeBook: EventEmitter<{}> = new EventEmitter();
 
-  text: string = "Hello world";
   @Input() books: Book[];
   @Input() favs: string[];
-  constructor() {
-    console.log('Hello BooklistComponent Component');
-  }
+  @Input() liked: string[];
+
+  constructor() {}
 
   ionViewDidLoad(){
 
@@ -37,5 +37,9 @@ export class BooklistComponent {
   }
   like(bookData){
     this.onLikeBook.emit(bookData);
+  }
+
+  unlike(bookData) {
+    this.onUnlikeBook.emit(bookData);
   }
 }

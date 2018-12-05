@@ -28,15 +28,17 @@ export class HomePage {
     });
     loader.present().then(()=>{
       this.db.getBooks().subscribe(result => {
+        let bookAux = [];
         result.forEach(unparsedBook =>{
           let parsedBook = new Book(unparsedBook.payload.doc.data());
           parsedBook.id = unparsedBook.payload.doc.id;
-          this.books.push(parsedBook);
+          bookAux.push(parsedBook);
         });
-        console.log(this.books);
+        this.books = bookAux;
         loader.dismiss();
       });
     });
+
   }
 
   openDetails() {
@@ -75,10 +77,25 @@ export class HomePage {
   like(bookData) {
     let currentUser = this.afAuth.getUserData();
     if(currentUser.likedBookIds.indexOf(bookData.id) !== -1) return;
-    currentUser.favouriteBookIds.push(bookData.id);
+    currentUser.likedBookIds.push(bookData.id);
     this.db.setUserDataAndLike(currentUser.uid, currentUser, bookData).then(_ => {
       let toast = this.toaster.create({
-        message: 'Book removed from favourites',
+        message: 'Liked book.',
+        position: 'bottom',
+        duration: 1000,
+      });
+      toast.present()
+    });
+  }
+
+  unlike(bookData) {
+    let currentUser = this.afAuth.getUserData();
+    let index = currentUser.likedBookIds.indexOf(bookData.id);
+    if(index === -1)return;
+    currentUser.likedBookIds.splice(index,1);
+    this.db.setUserDataAndLike(currentUser.uid, currentUser, bookData).then(_ => {
+      let toast = this.toaster.create({
+        message: 'Unliked book.',
         position: 'bottom',
         duration: 1000,
       });

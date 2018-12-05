@@ -9,7 +9,7 @@
       </ion-card-content>
       <ion-row>
         <ion-col>
-          <button ion-button icon-start clear small color="dark">
+          <button ion-button icon-start clear small color="dark" (click)="like(book.id, book.numOfLikes+1)">
             <ion-icon name="thumbs-up"></ion-icon>
             <div>{{book.numOfLikes}} Likes</div>
           </button>

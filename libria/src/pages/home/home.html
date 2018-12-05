@@ -4,5 +4,8 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <booklist [books]="this.books | titleFilter: searchTitle" [favs] = "afAuth.getUserData().favouriteBookIds" (onBookAddedToFavourites)="addBookIdToFavourites($event)" (onBookRemovedFromFavourites)="removeBookIdFromFavourites($event)"></booklist>
+  <booklist [books]="this.books | titleFilter: searchTitle" [favs] = "afAuth.getUserData().favouriteBookIds"
+            (onBookAddedToFavourites)="addBookIdToFavourites($event)"
+            (onBookRemovedFromFavourites)="removeBookIdFromFavourites($event)"
+            (onLikeBook)="like($event)"></booklist>
 </ion-content>

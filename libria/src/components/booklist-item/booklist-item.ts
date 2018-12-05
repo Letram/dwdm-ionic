@@ -17,8 +17,11 @@ export class BooklistItemComponent {
   text: string;
   @Input() book: Book;
   @Input() favs: string[];
+
   @Output() onAddToFavourites: EventEmitter<string> = new EventEmitter();
   @Output() onRemoveFromFavourites: EventEmitter<string> = new EventEmitter();
+  @Output() onLikeBook: EventEmitter<{}> = new EventEmitter();
+
   constructor() {
     console.log('Hello BooklistItemComponent Component');
     this.text = 'Hello World';
@@ -33,5 +36,9 @@ export class BooklistItemComponent {
 
   removeFromFavourites(id: string) {
     this.onRemoveFromFavourites.emit(id);
+  }
+
+  like(id: string, likes: number) {
+    this.onLikeBook.emit({id:id,numOfLikes:likes});
   }
 }

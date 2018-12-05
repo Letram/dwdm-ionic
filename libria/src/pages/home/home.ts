@@ -71,4 +71,18 @@ export class HomePage {
       toast.present()
     });
   }
+
+  like(bookData) {
+    let currentUser = this.afAuth.getUserData();
+    if(currentUser.likedBookIds.indexOf(bookData.id) !== -1) return;
+    currentUser.favouriteBookIds.push(bookData.id);
+    this.db.setUserDataAndLike(currentUser.uid, currentUser, bookData).then(_ => {
+      let toast = this.toaster.create({
+        message: 'Book removed from favourites',
+        position: 'bottom',
+        duration: 1000,
+      });
+      toast.present()
+    });
+  }
 }

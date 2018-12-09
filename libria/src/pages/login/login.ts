@@ -42,6 +42,7 @@ export class LoginPage {
           loggedUser.favouriteBookIds = result.data().favouriteBookIds;
           loggedUser.likedBookIds = result.data().likedBookIds;
           loggedUser.username = result.data().username;
+          loggedUser.bookLists = result.data().bookLists;
           this.authProvider.setUserData(loggedUser);
           this.navCtrl.setRoot(TabsPage);
           this.navCtrl.popToRoot();

@@ -4,6 +4,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
+  <button ion-button icon-only class="top-right-corner" (click)="openProfile()">
+    <ion-icon name="person"></ion-icon>
+  </button>
   <booklist [books]="this.books | titleFilter: searchTitle" [favs] = "afAuth.getUserData().favouriteBookIds" [liked] = "afAuth.getUserData().likedBookIds"
             (onBookAddedToFavourites)="addBookIdToFavourites($event)"
             (onBookRemovedFromFavourites)="removeBookIdFromFavourites($event)"

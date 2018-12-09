@@ -4,6 +4,8 @@ import {BookDetailsPage} from "../book-details/book-details";
 import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
 import {AuthenticationProvider} from "../../providers/authentication/authentication";
+import {ProfilePage} from "../profile/profile";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'page-home',
@@ -12,7 +14,7 @@ import {AuthenticationProvider} from "../../providers/authentication/authenticat
 export class HomePage {
   books: Book[] = [];
   searchTitle: string = "";
-
+  currentUser: User;
   constructor(public navCtrl: NavController,
               public db: FirebaseDatabaseProvider,
               private loader: LoadingController,
@@ -38,7 +40,7 @@ export class HomePage {
         loader.dismiss();
       });
     });
-
+    this.currentUser = this.afAuth.getUserData();
   }
 
   openDetails() {
@@ -46,9 +48,9 @@ export class HomePage {
   }
 
   addBookIdToFavourites(id: string) {
-    let currentUser = this.afAuth.getUserData();
-    currentUser.favouriteBookIds.push(id);
-    this.db.setUserData(currentUser.uid, currentUser).then(_ => {
+    this.currentUser = this.afAuth.getUserData();
+    this.currentUser.favouriteBookIds.push(id);
+    this.db.setUserData(this.currentUser.uid, this.currentUser).then(_ => {
       let toast = this.toaster.create({
         message: 'Book added to favourites',
         position: 'bottom',
@@ -101,5 +103,9 @@ export class HomePage {
       });
       toast.present()
     });
+  }
+
+  openProfile() {
+    this.navCtrl.push(ProfilePage, {user: this.currentUser, books: this.books});
   }
 }

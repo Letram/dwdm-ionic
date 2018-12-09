@@ -4,15 +4,17 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Profile</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
-
+  <ion-list>
+    <ion-list-header>Favourite books</ion-list-header>
+    <ion-item *ngFor="let fav of favs">{{fav.title}}</ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>Liked books</ion-list-header>
+    <ion-item *ngFor="let likedBook of liked">{{likedBook.title}}</ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header><ion-title>Your Lists: <ion-icon name="add-circle" class="right" (click)="openBooklistAlert()"></ion-icon></ion-title></ion-list-header>
+    <ion-item *ngFor="let booklist of user.bookLists">{{booklist.title}}</ion-item>
+  </ion-list>
 </ion-content>

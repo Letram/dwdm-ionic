@@ -19,7 +19,7 @@ export class FirebaseDatabaseProvider {
   }
 
   setUserData(uid: string, loggedUser: User) {
-    return this.db.collection("UsersData").doc(uid).set({...loggedUser});
+    return this.db.collection("UsersData").doc(uid).set(Object.assign({}, loggedUser));
   }
 
   async setUserDataAndLike(uid: string, currentUser: User, bookData) {
@@ -32,5 +32,13 @@ export class FirebaseDatabaseProvider {
     let index = bookData.id;
     delete bookData.id;
     return this.db.collection("Books").doc(index).update(bookData);
+  }
+
+  async getBooksById(likedBookIds: string[]) {
+    let res:Array<any> = [];
+    for (let i = 0; i <likedBookIds.length; i++) {
+      res[i] = await this.db.collection('Books').doc(likedBookIds[i]).get().toPromise();
+    }
+    return Promise.all(res);
   }
 }

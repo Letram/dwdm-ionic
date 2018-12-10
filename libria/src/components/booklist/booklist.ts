@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Book} from "../../models/Book";
+import {User} from "../../models/User";
 
 /**
  * Generated class for the BooklistComponent component.
@@ -17,10 +18,12 @@ export class BooklistComponent {
   @Output() onBookRemovedFromFavourites: EventEmitter<string> = new EventEmitter();
   @Output() onLikeBook: EventEmitter<{}> = new EventEmitter();
   @Output() onUnlikeBook: EventEmitter<{}> = new EventEmitter();
+  @Output() onUserUpdate: EventEmitter<{}> = new EventEmitter();
 
   @Input() books: Book[];
   @Input() favs: string[];
   @Input() liked: string[];
+  @Input() user: any;
 
   constructor() {}
 
@@ -41,5 +44,9 @@ export class BooklistComponent {
 
   unlike(bookData) {
     this.onUnlikeBook.emit(bookData);
+  }
+
+  userUpdate(userData){
+    this.onUserUpdate.emit(userData);
   }
 }

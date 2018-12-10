@@ -108,4 +108,8 @@ export class HomePage {
   openProfile() {
     this.navCtrl.push(ProfilePage, {user: this.currentUser, books: this.books});
   }
+
+  updateUser(userData: any) {
+    this.db.setUserData(userData.uid, userData.user);
+  }
 }

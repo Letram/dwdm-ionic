@@ -7,9 +7,13 @@
   <button ion-button icon-only class="top-right-corner" (click)="openProfile()">
     <ion-icon name="person"></ion-icon>
   </button>
-  <booklist [books]="this.books | titleFilter: searchTitle" [favs] = "afAuth.getUserData().favouriteBookIds" [liked] = "afAuth.getUserData().likedBookIds"
+  <booklist [books]="this.books | titleFilter: searchTitle"
+            [favs] = "afAuth.getUserData().favouriteBookIds"
+            [liked] = "afAuth.getUserData().likedBookIds"
+            [user] = "afAuth.getUserData()"
             (onBookAddedToFavourites)="addBookIdToFavourites($event)"
             (onBookRemovedFromFavourites)="removeBookIdFromFavourites($event)"
             (onLikeBook)="like($event)"
-            (onUnlikeBook)="unlike($event)"></booklist>
+            (onUnlikeBook)="unlike($event)"
+            (onUserUpdate)="updateUser($event)"></booklist>
 </ion-content>

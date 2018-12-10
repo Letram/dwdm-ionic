@@ -5,16 +5,39 @@
   Ionic pages and navigation.
 -->
 <ion-content padding>
-  <ion-list>
-    <ion-list-header>Favourite books</ion-list-header>
-    <ion-item *ngFor="let fav of favs">{{fav.title}}</ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>Liked books</ion-list-header>
-    <ion-item *ngFor="let likedBook of liked">{{likedBook.title}}</ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header><ion-title>Your Lists: <ion-icon name="add-circle" class="right" (click)="openBooklistAlert()"></ion-icon></ion-title></ion-list-header>
-    <ion-item *ngFor="let booklist of user.bookLists">{{booklist.title}}</ion-item>
-  </ion-list>
+  <ion-card>
+    <ion-list>
+      <ion-list-header>Favourite books</ion-list-header>
+      <ion-item *ngFor="let fav of favs">{{fav.title}}</ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card>
+    <ion-list>
+      <ion-list-header>Liked books</ion-list-header>
+      <ion-item *ngFor="let likedBook of liked">{{likedBook.title}}</ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        <ion-title>
+          Your Lists
+          <ion-icon name="add-circle" class="right" (click)="openBooklistAlert()"></ion-icon>
+        </ion-title>
+      </ion-list-header>
+      <ion-item-sliding *ngFor="let booklist of user.bookLists">
+        <ion-item (click) = "openBooklist(user, booklist)">
+          {{booklist.title}}
+          <ion-badge item-end="" class="mcustom1">
+            {{booklist.bookIds.length}}
+          </ion-badge>
+        </ion-item>
+        <ion-item-options>
+          <button item-end ion-button color="danger" (click)="removeFromBooklist(booklist)">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-card>
 </ion-content>

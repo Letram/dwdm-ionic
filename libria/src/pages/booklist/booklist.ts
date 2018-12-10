@@ -2,13 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
 import {Book} from "../../models/Book";
-
-/**
- * Generated class for the BooklistPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {User} from "../../models/User";
 
 @IonicPage()
 @Component({
@@ -18,12 +12,17 @@ import {Book} from "../../models/Book";
 export class BooklistPage {
 
   bookListBooks: Book[] = [];
+  user: User;
+  booklist: any = {};
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: FirebaseDatabaseProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BooklistPage');
-    this.db.getBooksById(this.navParams.get('books')).then(data => {
+    this.user = this.navParams.get('user');
+    this.booklist = this.navParams.get('booklist');
+
+    this.db.getBooksById(this.booklist.bookIds).then(data => {
       let bookAux = [];
       data.forEach(unparsedBook =>{
         let parsedBook = new Book(unparsedBook.data());

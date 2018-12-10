@@ -1,16 +1,8 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Book} from "../../models/Book";
 import {AuthenticationProvider} from "../../providers/authentication/authentication";
-import {User} from "../../models/User";
 import {ActionSheetController, AlertController} from "ionic-angular";
-import {async} from "rxjs-compat/scheduler/async";
 
-/**
- * Generated class for the BooklistItemComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'booklist-item',
   templateUrl: 'booklist-item.html'
@@ -55,7 +47,6 @@ export class BooklistItemComponent {
       actionSheetBtns.push({
         text:this.user.bookLists[i].title,
         handler: () => {
-          //this.dbApi.pushBookToList(this.bookLists[i], this.bookData, this.selectedBook.id);
           this.user.bookLists[i].bookIds.push(book.id);
           this.onUserUpdate.emit({uid: this.user.uid, user:this.user});
           let alert = this.alertCtrl.create({
@@ -68,7 +59,10 @@ export class BooklistItemComponent {
       });
     }
     if(actionSheetBtns.length === 0)
-      this.alertCtrl.create({title:"Oops! Something went wrong...", subTitle: "Wow, it seems that your book is in all of your lists. Maybe try to add another one or create a new list"}).present();
+      this.alertCtrl.create(
+        {title:"Oops! Something went wrong...",
+          subTitle: "Wow, it seems that your book is in all of your lists. Maybe try to add another one or create a new list"
+        }).present();
     else{
       let actionSheet = this.actionSheetCtrl.create({
         title: 'Select a booklist',

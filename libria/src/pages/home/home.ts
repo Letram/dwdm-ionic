@@ -43,10 +43,6 @@ export class HomePage {
     this.currentUser = this.afAuth.getUserData();
   }
 
-  openDetails() {
-    this.navCtrl.push(BookDetailsPage);
-  }
-
   addBookIdToFavourites(id: string) {
     this.currentUser = this.afAuth.getUserData();
     this.currentUser.favouriteBookIds.push(id);

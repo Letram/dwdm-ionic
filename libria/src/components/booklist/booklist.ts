@@ -1,13 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Book} from "../../models/Book";
-import {User} from "../../models/User";
 
-/**
- * Generated class for the BooklistComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'booklist',
   templateUrl: 'booklist.html'

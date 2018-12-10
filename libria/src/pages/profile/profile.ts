@@ -5,13 +5,6 @@ import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
 import {BooklistPage} from "../booklist/booklist";
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-profile',
@@ -21,6 +14,7 @@ export class ProfilePage {
   user: User = new User();
   favs: Book[] = [];
   liked: Book[] = [];
+  readonly: boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: FirebaseDatabaseProvider, private alertCtrl: AlertController) {
   }
 
@@ -79,5 +73,15 @@ export class ProfilePage {
       ]
     });
     alert.present();
+  }
+
+  removeFromBooklist(booklist: any) {
+    console.log(this.user.bookLists.indexOf(booklist));
+    this.user.bookLists.splice(this.user.bookLists.indexOf(booklist), 1);
+    this.db.setUserData(this.user.uid, this.user).then(_ => console.log("Actualizado."));
+  }
+
+  openBooklist(user: User, booklist: any) {
+    this.navCtrl.push(BooklistPage, {user, booklist});
   }
 }

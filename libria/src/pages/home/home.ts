@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {LoadingController, NavController, ToastController} from 'ionic-angular';
-import {BookDetailsPage} from "../book-details/book-details";
+import {FabContainer, LoadingController, NavController, ToastController} from 'ionic-angular';
 import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
 import {AuthenticationProvider} from "../../providers/authentication/authentication";
 import {ProfilePage} from "../profile/profile";
 import {User} from "../../models/User";
+import {LoginPage} from "../login/login";
 
 @Component({
   selector: 'page-home',
@@ -101,11 +101,19 @@ export class HomePage {
     });
   }
 
-  openProfile() {
+  openProfile(fab: FabContainer) {
     this.navCtrl.push(ProfilePage, {user: this.currentUser, books: this.books});
+    fab.close();
   }
 
   updateUser(userData: any) {
     this.db.setUserData(userData.uid, userData.user);
+  }
+
+  signOut(fab: FabContainer) {
+    fab.close();
+    this.afAuth.signout();
+    this.navCtrl.setRoot(LoginPage);
+    this.navCtrl.popToRoot();
   }
 }

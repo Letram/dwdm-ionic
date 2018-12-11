@@ -7,7 +7,6 @@ import {User} from "../../models/User";
 export class AuthenticationProvider {
   loggedUser: User = new User();
   constructor(public http: HttpClient, private afAuth: AngularFireAuth) {
-    console.log('Hello AuthenticationProvider Provider');
   }
 
   login(email,password){
@@ -22,5 +21,11 @@ export class AuthenticationProvider {
   setUserData(userData){
     this.loggedUser = userData;
     console.log(userData);
+  }
+
+  signout() {
+    return this.afAuth.auth.signOut().then(_ => {
+      this.loggedUser = new User();
+    })
   }
 }

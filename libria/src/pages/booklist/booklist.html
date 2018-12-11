@@ -7,7 +7,20 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let book of bookListBooks">
-      {{book.title}}
+      <ion-card>
+        <ion-item>
+          <h2>{{book.title}}</h2>
+          <p>{{book.numOfPages}} pages</p>
+        </ion-item>
+        <ion-row>
+          <ion-col center text-center>
+            <button ion-button icon-start small color="danger" (click) = "remove(book)">
+              <ion-icon name="close"></ion-icon>
+              <div>Remove from list</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
     </ion-item>
   </ion-list>
 </ion-content>

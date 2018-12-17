@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import {HttpClientModule} from '@angular/common/http'
-
+import {SQLite} from "@ionic-native/sqlite";
 //pages
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -48,7 +48,7 @@ import {PipesModule} from "../pipes/pipes.module";
     AngularFireAuthModule,
     ComponentsModule,
     PipesModule,
-    ProgressBarModule
+    ProgressBarModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,7 +67,8 @@ import {PipesModule} from "../pipes/pipes.module";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClientModule,
     AuthenticationProvider,
-    FirebaseDatabaseProvider
+    FirebaseDatabaseProvider,
+    SQLite
   ]
 })
 export class AppModule {}

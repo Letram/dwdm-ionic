@@ -40,4 +40,42 @@
       </ion-item-sliding>
     </ion-list>
   </ion-card>
+  <ion-card>
+    <ion-card-header>
+      Your bookmarks
+    </ion-card-header>
+    <ion-scroll scrollY="true" *ngIf="bookmarks.length > 0">
+      <ion-card *ngFor="let bookmark of bookmarks">
+        {{bookmark.title}} left at page {{bookmark.page}}
+      </ion-card>
+    </ion-scroll>
+    <form [formGroup] = "addBookmarkForm" (ngSubmit)="addBookmark()">
+      <ion-row>
+        <ion-col col-9>
+          <ion-item>
+            <ion-input type="text"
+                       [(ngModel)]="newBookmark.title"
+                       formControlName="title"
+                       placeholder="Title...">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-3>
+          <ion-item>
+            <ion-input type="number"
+                       [(ngModel)]="newBookmark.page"
+                       formControlName="page"
+                       placeholder="Page..."></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-input type="hidden"
+                  [value]="user.uid"
+                 formControlName="uid"></ion-input>
+      <button ion-button
+              [disabled]="!addBookmarkForm.valid"
+              type="submit"
+              id="addbookmark"><ion-icon name="add"></ion-icon></button>
+    </form>
+  </ion-card>
 </ion-content>

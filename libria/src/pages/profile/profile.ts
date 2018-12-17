@@ -4,6 +4,8 @@ import {User} from "../../models/User";
 import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
 import {BooklistPage} from "../booklist/booklist";
+import {SQLite, SQLiteObject} from "@ionic-native/sqlite";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @IonicPage()
 @Component({
@@ -15,7 +17,19 @@ export class ProfilePage {
   favs: Book[] = [];
   liked: Book[] = [];
   readonly: boolean = true;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: FirebaseDatabaseProvider, private alertCtrl: AlertController) {
+  bookmarks: any[] = [];
+  newBookmark = {
+    uid: '',
+    title: '',
+    page: ''
+  };
+  addBookmarkForm: FormGroup;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: FirebaseDatabaseProvider, private alertCtrl: AlertController, private sqlite: SQLite, public formBuilder: FormBuilder) {
+    this.addBookmarkForm = formBuilder.group({
+      title: ['', Validators.required],
+      page: ['', Validators.required],
+      uid: ['', Validators.required]
+    })
   }
 
   ionViewDidLoad() {
@@ -39,6 +53,7 @@ export class ProfilePage {
       });
       this.favs = bookAux;
     });
+    this.getBookmarks(this.user.uid);
   }
 
   openBooklistAlert() {
@@ -83,5 +98,57 @@ export class ProfilePage {
 
   openBooklist(user: User, booklist: any) {
     this.navCtrl.push(BooklistPage, {user, booklist});
+  }
+
+  private getBookmarks(uid: string) {
+    this.sqlite.create({
+      name: 'ionicdb.db',
+      location: 'default'
+    }).then((db: SQLiteObject) =>{
+      db.executeSql('CREATE TABLE IF NOT EXISTS ' +
+        'Bookmarks(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        'uid TEXT, BookTitle TEXT, Page integer ')
+        .then(res => console.log('Executed SQL creation'))
+        .catch(e => {
+          console.log(e);
+          console.log("cvhungo");
+        });
+      db.executeSql('SELECT * FROM BookMarks WHERE uid=? ORDER BY id DESC', [uid])
+        .then(res => {
+          this.bookmarks = [];
+          for (var i = 0; i < res.rows.length; i++) {
+            this.bookmarks.push({
+              id: res.rows.item(i).id,
+              uid: res.rows.item(i).uid,
+              title: res.rows.item(i).BookTitle,
+              page: res.rows.item(i).Page
+            });
+          }
+        });
+    });
+  }
+
+  addBookmark() {
+    this.newBookmark.uid = this.addBookmarkForm.controls.uid.value;
+    this.sqlite.create({
+      name: 'ionicdb.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('INSERT INTO Bookmarks (uid, BookTitle, Page), VALUES (?,?,?)',
+        [this.newBookmark.uid, this.newBookmark.title, this.newBookmark.page]).then(() => {
+          this.getBookmarks(this.newBookmark.uid);
+      });
+    });
+  }
+  removeBookmark(id: string){
+    this.sqlite.create({
+      name: 'ionicdb.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('DELETE FROM Bookmarks WHERE id=?',
+        [id]).then(() => {
+        this.getBookmarks(this.user.uid);
+      });
+    });
   }
 }

@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FabContainer, LoadingController, NavController, ToastController} from 'ionic-angular';
 import {Book} from "../../models/Book";
 import {FirebaseDatabaseProvider} from "../../providers/firebase-database/firebase-database";
 import {AuthenticationProvider} from "../../providers/authentication/authentication";
 import {ProfilePage} from "../profile/profile";
 import {User} from "../../models/User";
-import {LoginPage} from "../login/login";
+import {Events } from "ionic-angular";
 
 @Component({
   selector: 'page-home',
@@ -15,11 +15,15 @@ export class HomePage {
   books: Book[] = [];
   searchTitle: string = "";
   currentUser: User;
+
+  @Output() onLikeBook: EventEmitter<{}> = new EventEmitter();
+
   constructor(public navCtrl: NavController,
               public db: FirebaseDatabaseProvider,
               private loader: LoadingController,
               private afAuth: AuthenticationProvider,
-              private toaster: ToastController) {
+              private toaster: ToastController,
+              private events: Events) {
 
   }
 
@@ -113,7 +117,6 @@ export class HomePage {
   signOut(fab: FabContainer) {
     fab.close();
     this.afAuth.signout();
-    this.navCtrl.setRoot(LoginPage);
-    this.navCtrl.popToRoot();
+    this.events.publish("user:logout");
   }
 }

@@ -27,6 +27,7 @@ import { FirebaseDatabaseProvider } from '../providers/firebase-database/firebas
 //custom components
 import {ComponentsModule} from "../components/components.module";
 import {PipesModule} from "../pipes/pipes.module";
+import { LocalDatabaseProvider } from '../providers/local-database/local-database';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import {PipesModule} from "../pipes/pipes.module";
     HttpClientModule,
     AuthenticationProvider,
     FirebaseDatabaseProvider,
-    SQLite
+    SQLite,
+    LocalDatabaseProvider
   ]
 })
 export class AppModule {}

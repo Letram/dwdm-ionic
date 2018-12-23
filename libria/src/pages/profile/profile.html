@@ -44,9 +44,9 @@
     <ion-card-header>
       Your bookmarks
     </ion-card-header>
-    <ion-scroll scrollY="true" *ngIf="bookmarks.length > 0">
+    <ion-scroll class="h350" scrollY="true" *ngIf="bookmarks.length > 0">
       <ion-card *ngFor="let bookmark of bookmarks">
-        {{bookmark.title}} left at page {{bookmark.page}}
+        {{bookmark.title}} left at page {{bookmark.page}} ({{bookmark.uid}})
       </ion-card>
     </ion-scroll>
     <form [formGroup] = "addBookmarkForm" (ngSubmit)="addBookmark()">

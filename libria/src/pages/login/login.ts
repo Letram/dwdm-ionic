@@ -32,7 +32,6 @@ export class LoginPage {
   }
 
   login() {
-    console.log(this.loginForm);
     this.authProvider.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .then((data) => {
         let loggedUser = new User();

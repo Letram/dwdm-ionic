@@ -123,4 +123,10 @@ export class ProfilePage {
       .then(() => this.getBookmarks(this.newBookmark.uid))
       .catch(e => console.log('Error en el Insert: ', e));
   }
+
+  removeBookmark(id: any) {
+    this.localdb.execute('DELETE FROM Bookmarks WHERE id=?', [id])
+      .then(() => this.getBookmarks(this.user.uid))
+      .catch(e => console.log('Error en el Delete: ', e));
+  }
 }
